@@ -1,0 +1,10 @@
+body {
+  margin: 20px;
+  background-color: rgb(118, 215, 189);
+}
+#output {
+  border-width: 2px;
+  border-style: solid;
+  border-color: blue;
+  padding: 5px;
+}
