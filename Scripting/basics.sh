@@ -60,6 +60,95 @@ do
   echo $i;
 done
 
+for command in cd ls pwd date ....
+do
+  echo $command
+done
+
+#Print each file in TMP directory
+TEMP_PATH=$1
+[ $# == 0 ] && echo "Success" || echo "Fail"; exit 1111;
+for i in $(ls $TEMP_PATH/*)
+do
+  [ -f $i ] && echo "$f found" || "not a File"; exit 123;
+done
+
+
+# Basic While loop
+
+while [[ test conditions]]
+while (( test condtions ))
+do
+  # do operations
+done
+
+#infinite loop
+while true
+or
+while false
+or
+while :
+do
+  #do someting to stop
+done
+
+<<COMMENT_UNTIL
+# Executes as long as until condition evaluates to TRUE. Exit value is Non-zero
+# Atleast ONCE
+
+until [[ condition ]]
+do
+    // do something
+done
+COMMENT_UNTIL
+
+<<COMMENT_SELECT_LOOP
+# uses PS3 Prompt::
+
+  select varName in List
+  do
+      case $varName in
+            vinodh)
+                  // do something
+                  ;;
+            kumar)
+                  // do something
+                  ;;
+            exit)
+                  // cleanup before exit
+                  ;;
+            *)
+                  // do default
+                  ;;
+      esac
+  done
+COMMENT_SELECT_LOOP
+
+
+#Nested Loops
+for (( i = 0 ; i < $out ; i++ ))
+do
+  while [[ 2 -gt $num ]]
+  do
+      for nn in {1..10}
+      do
+          echo "inner most loop"
+          [ $nn -eq 5 ] && break 2; -- > break TWO enclosing loops
+          [ $nn -lt 5 ] && continue; -- > skip the logic exists after this
+      done
+  done
+done
+
+
+# Print nth TABLE
+
+TABLE_NUM=$1
+
+for i in {1..10}
+do
+    echo "$TBALE_NUM * $i = $(( $TABLE_NUM * $i ))"
+done
+
 # case statement
 read -p "Enter the name" name
 case $name in
