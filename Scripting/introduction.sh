@@ -2,7 +2,7 @@
 # Learning basics of Unix/LINUX
 # Author : Vinodh Kumar Thimmisetty <vinodh5052@gmail.com>
 
-
+#~/.bashrc --> Any setting changes to shell
 <<COMMENT_INTRODUCTION
  There are nearly 200+ LINUX Distributions.Kernal manages the Resources of
  LINUX such as File Management, Networking,Memory management etc. and decides
@@ -47,9 +47,18 @@ export sample="dummy"
 
   read -r $v1 $v2 $v3 <<< $BOSS
 
-# Remove Shell Varibales
+#Set & Unset Shell Varibales
+set sample
 unset $sample
 
+set -o variableName --> ON
+set +o variableName --> OFF
+
+shopt -s variableName --> ON
+shopt -u variableName --> OFF
+
+e.g: ENabling spell Check
+shopt -s cdspell
 
 # Prefer PRINTF "%" to ECHO for formatting the varaible values
 
@@ -79,6 +88,11 @@ alias clr="clear"
 alias list="ls -lrt"
 unalias clr
 unalias -a --> Removes all aliases
+
+# To print date on executing of every command in shell
+$PS1 --> Primary Prompt
+$PROMPT_COMMAND=date  --> Executed as command before executing the $PS1
+
 <<COMMENT_COMMANDS
 
 1. To Check available shells
@@ -141,3 +155,13 @@ echo -e "My Name is \n Vinodh \n Kumar \n Thimmisetty"
   printenv
   set --> System Variables including All functions
 COMMAND_ENVIRONMENT_VARIABLES
+
+<<COMMAND_SHELLPROMPTS
+
+1. \d --> Date format "Mon Apr 20"
+2. \t --> Time in 21:23:21 format
+3. \T --> Time in 01:33:32 format
+4. \A --> Time in 21:31 format (No seconds)
+5. \@ --> Time in 03:21 am/pm format
+
+COMMAND_SHELLPROMPTS
