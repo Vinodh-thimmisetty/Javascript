@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 
 # ------------------------------------------------------------------------------------------------------
 # Purpose: This script is used to count Number of occurences of word "vinodh" in a log file
@@ -32,7 +32,7 @@ LOG_PATH=$1
 # Check whether the Argument passed is Valid File or not
 [[ ! -f  $LOG_PATH ]] && { echo "Not a File"; exit 2;  } 
 
-<<EXECUTION_STEPS
+: '
 
 	1. Pass the File as INPUT to a WHILE Loop.
 	2. Read file content  Line by Line and echo it for debugging
@@ -41,9 +41,9 @@ LOG_PATH=$1
 	5. Read each word in a File <-- Its based on IFS(Internal Field Separator) which has "SPACE" as default delimiter
 	6. Test word matches with Search Key and increase the counter variable 
  
-EXECUTION_STEPS
+'
 
-while read eachLine
+while read -r eachLine
 do
    echo "::::::$eachLine:::::::"
 	
@@ -52,12 +52,12 @@ do
 	    [[ "${eachWord,,}" == "${SEARCH_WORD,,}" ]] &&  (( COUNT++ ))		
 	done	    
 
-done < $LOG_PATH
+done < "$LOG_PATH"
 
 echo "Count is:::: $COUNT"
 
 
-<<COMMENTS
+: '
 	Additional Requirement:
 		1.  Pass the Line Numbers with Count of search term to some external File : vinodh-count.txt in /tmp/VINODH directory
 		2.  Create output log file if necessary inside Directory /tmp/OUTPUT
@@ -74,7 +74,7 @@ echo "Count is:::: $COUNT"
 
 		########################## DATE + TIME STAMP + USER Who executed the Script #################################
 
-COMMENTS
+'
 
 # Set DEBUG = OFF --> Applicable only for Testing Environments
 set +x
