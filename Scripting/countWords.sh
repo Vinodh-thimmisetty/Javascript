@@ -79,7 +79,7 @@ echo "Count is:::: $COUNT"
 #Temporary Variables
 LINE_NUMBER=0
 TEMP_COUNT=0
-TOTAL_COUT=0
+TOTAL_COUNT=0
 LOGGED_IN_USER=$(whoami)
 EXTERNAL_FILE_PATH=/home/vinodh/temp
 CURRENT_DATE=$(date +"%d-%m-%Y")
@@ -100,10 +100,10 @@ LOG_FILE_FULL_PATH="$EXTERNAL_FILE_PATH/$LOG_FILE_NAME"
 
 chmod +rwx "$LOG_FILE_FULL_PATH"
 
-echo "################################################ $CURRENT_DATE :: $CURRENT_TIMESTAMP :: Executed by ==> $LOGGED_IN_USER #################################" >> $LOG_FILE_FULL_PATH 
+echo "################################################ $CURRENT_DATE :: $CURRENT_TIMESTAMP :: Executed by ==> $LOGGED_IN_USER #################################" >> "$LOG_FILE_FULL_PATH" 
 
 # Total Number of Lines in a File
-echo -e "\nTotal Number of Lines in File: $LOG_FILE_FULL_PATH is: $(wc -l $LOG_PATH | cut -d " " -f1) \n" >> $LOG_FILE_FULL_PATH
+echo -e "\\nTotal Number of Lines in File: $LOG_FILE_FULL_PATH is: $(wc -l "$LOG_PATH" | cut -d " " -f1) \\n" >> "$LOG_FILE_FULL_PATH"
 
 while read -r eachLine
 do
@@ -121,9 +121,9 @@ do
 done < "$LOG_PATH"
 	
 	# Print the Total Count
-	echo -e "\n Total Matches :: $TOTAL_COUNT \n" >> $LOG_FILE_FULL_PATH
+	echo -e "\\n Total Matches :: $TOTAL_COUNT \\n" >> "$LOG_FILE_FULL_PATH"
 
-echo "################################################ $CURRENT_DATE :: $CURRENT_TIMESTAMP :: Executed by ==> $LOGGED_IN_USER #################################" >> $LOG_FILE_FULL_PATH
+echo "################################################ $CURRENT_DATE :: $CURRENT_TIMESTAMP :: Executed by ==> $LOGGED_IN_USER #################################" >> "$LOG_FILE_FULL_PATH"
 
 # Set DEBUG = OFF --> Applicable only for Testing Environments
 set +x
