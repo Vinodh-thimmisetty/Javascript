@@ -113,7 +113,7 @@ do
 		[[ "${eachWord^^}" == "${SEARCH_WORD^^}" ]] && { (( TEMP_COUNT++ )); (( TOTAL_COUNT++ )); } 	
 	done
 	# Logging into external file Starts
-		echo "Number of matches of word: $SEARCH_WORD in Line:: $LINE_NUMBER is: $TEMP_COUNT" >> $LOG_FILE_FULL_PATH
+		echo "Number of matches of word: $SEARCH_WORD in Line:: $LINE_NUMBER is: $TEMP_COUNT" >> "$LOG_FILE_FULL_PATH"
 
 		# RESET THE TEMP_COUNTER to ZERO
 		TEMP_COUNT=0
