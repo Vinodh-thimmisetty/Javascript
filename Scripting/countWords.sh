@@ -76,5 +76,57 @@ echo "Count is:::: $COUNT"
 
 '
 
+#Temporary Variables
+LINE_NUMBER=0
+TEMP_COUNT=0
+TOTAL_COUT=0
+LOGGED_IN_USER=$(whoami)
+EXTERNAL_FILE_PATH=/home/vinodh/temp
+CURRENT_DATE=$(date +"%d-%m-%Y")
+CURRENT_TIMESTAMP=$(date +"%T")
+
+# Create a directoty if not Exists
+[[ ! -d "$EXTERNAL_FILE_PATH" ]] && mkdir -p "$EXTERNAL_FILE_PATH"
+
+# Create a Log File if not Exists with above mentioned format in the requirements
+# Concat the File Name with static string AND append with full File Path
+
+LOG_FILE_NAME="${CURRENT_DATE}_countMatch.log"
+LOG_FILE_FULL_PATH="$EXTERNAL_FILE_PATH/$LOG_FILE_NAME"
+
+[[ ! -f "$LOG_FILE_FULL_PATH" ]] && { echo "No File Existst"; touch "$LOG_FILE_FULL_PATH" || echo "File $LOG_FILE_FULL_PATH Exists"; } 
+
+# Change the Permission of a File
+
+chmod +rwx "$LOG_FILE_FULL_PATH"
+
+echo "################################################ $CURRENT_DATE :: $CURRENT_TIMESTAMP :: Executed by ==> $LOGGED_IN_USER #################################" >> $LOG_FILE_FULL_PATH 
+
+# Total Number of Lines in a File
+echo -e "\nTotal Number of Lines in File: $LOG_FILE_FULL_PATH is: $(wc -l $LOG_PATH | cut -d " " -f1) \n" >> $LOG_FILE_FULL_PATH
+
+while read -r eachLine
+do
+	(( LINE_NUMBER++ ))
+	for eachWord in $eachLine
+	do
+		[[ "${eachWord^^}" == "${SEARCH_WORD^^}" ]] && { (( TEMP_COUNT++ )); (( TOTAL_COUNT++ )); } 	
+	done
+	# Logging into external file Starts
+		echo "Number of matches of word: $SEARCH_WORD in Line:: $LINE_NUMBER is: $TEMP_COUNT" >> $LOG_FILE_FULL_PATH
+
+		# RESET THE TEMP_COUNTER to ZERO
+		TEMP_COUNT=0
+	# Logging into external file Ends
+done < "$LOG_PATH"
+	
+	# Print the Total Count
+	echo -e "\n Total Matches :: $TOTAL_COUNT \n" >> $LOG_FILE_FULL_PATH
+
+echo "################################################ $CURRENT_DATE :: $CURRENT_TIMESTAMP :: Executed by ==> $LOGGED_IN_USER #################################" >> $LOG_FILE_FULL_PATH
+
 # Set DEBUG = OFF --> Applicable only for Testing Environments
 set +x
+
+
+
