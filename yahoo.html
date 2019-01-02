@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" media="screen" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" />
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <div class="container jumbotron">
+    <button class="btn btn-primary" id="getStockValues">Get Status</button>
+    <div class="container" id="stockValues">
+
+    </div>
+  </div>
+</body>
+
+
+<script>
+
+var Candle = (function () {
+  function Candle(date, open, high, low, close, sharedTraded, turnOverinCrores) {
+    this.date = date;
+    this.open = open;
+    this.high = high;
+    this.low = low;
+    this.close = close;
+    this.sharedTraded = sharedTraded;
+    this.turnOverinCrores = turnOverinCrores;
+  }
+  return Candle;
+}());
+
+function loadJSPResponse(serverResponse) {
+  var rows = serverResponse.getElementsByTagName('table')[0].rows;
+  const totalRows = rows.length;
+  var stockValues = [];
+  // console.log('rows :: ', rows);
+  for (let i = 3; i < totalRows - 2; i++) {
+    // console.log(rows[i]);
+
+    stockValues.push(new Candle(rows[i].cells[0].textContent.replace(/\n/g, '').replace(/ /g, ''),
+      rows[i].cells[1].textContent.replace(/\n/g, '').replace(/ /g, ''),
+      rows[i].cells[2].textContent.replace(/\n/g, '').replace(/ /g, ''),
+      rows[i].cells[3].textContent.replace(/\n/g, '').replace(/ /g, ''),
+      rows[i].cells[4].textContent.replace(/\n/g, '').replace(/ /g, ''),
+      rows[i].cells[5].textContent.replace(/\n/g, '').replace(/ /g, ''),
+      rows[i].cells[6].textContent.replace(/\n/g, '').replace(/ /g, '')
+    ));
+  }
+  return stockValues;
+  // console.log(JSON.stringify(stockValues));
+}
+
+document.getElementById('getStockValues').addEventListener('click', () => {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+      console.log('---------');
+      console.log(this.responseText);
+      console.log('---------');
+      document.getElementById("stockValues").innerHTML = loadJSPResponse(this.responseText);
+    }
+  };
+  xhttp.open("GET", "https://www.nseindia.com/products/dynaContent/equities/indices/historicalindices.jsp?indexType=NIFTY%2050&fromDate=01-01-2018&toDate=28-12-2018", true);
+  xhttp.setRequestHeader("Access-Control-Allow-Origin", "*");
+  xhttp.setRequestHeader("content-type", "text/html;charset=ISO-8859-1");
+  xhttp.send();
+})
+</script>
+
+</html>
